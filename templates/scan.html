@@ -1,0 +1,192 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QR Scan | Attendance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #cce7ff, #ffe0eb);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding-top: 80px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(90deg, #003366, #004080);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        .navbar-brand {
+            color: #00e6e6 !important;
+            font-weight: 700;
+            font-size: 1.6rem;
+        }
+        .nav-link {
+            color: #ffffff !important;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #00e6e6 !important;
+        }
+
+        /* Scanner Container with Glass Effect */
+        .scan-container {
+            max-width: 550px;
+            margin: auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+            text-align: center;
+            animation: fadeInUp 0.8s ease-in-out;
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        h4 {
+            color: #003366;
+            font-weight: 700;
+        }
+
+        /* QR Reader Styling */
+        #qr-reader {
+            width: 100%;
+            border: 2px dashed #2575fc;
+            border-radius: 12px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 12px rgba(37, 117, 252, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 12px rgba(37, 117, 252, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(37, 117, 252, 0.6); }
+            100% { box-shadow: 0 0 12px rgba(37, 117, 252, 0.3); }
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        /* Scanned Details Card */
+        .scanned-details {
+            margin-top: 20px;
+            text-align: left;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .scanned-img {
+            max-width: 120px;
+            border-radius: 8px;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .scanned-img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Smooth Links Hover Animation */
+        .nav-item {
+            position: relative;
+        }
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            left: 50%;
+            bottom: 0;
+            background-color: #00e6e6;
+            transition: all 0.3s ease-in-out;
+        }
+        .nav-item:hover::after {
+            width: 100%;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand" href="#">Teacher Dashboard</a>
+        <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' userid %}"><i class="fas fa-home"></i> Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-file-alt"></i> Report</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'attendance' userid %}"><i class="fas fa-qrcode"></i> Scanner</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Scanner Box -->
+<div class="scan-container">
+    <h4 class="mb-3">Scan QR Code</h4>
+
+    {% if error_message %}
+        <div class="error-message">{{ error_message }}</div>
+    {% endif %}
+
+    <div id="qr-reader"></div>
+
+    <!-- Hidden Form -->
+    <form method="POST" action="{% url 'attendance' userid %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="roll_number" id="qr_data">
+    </form>
+
+    {% if post %}
+        <div class="scanned-details">
+            <h5 class="mt-2"><strong>Scanned Details</strong></h5>
+            <p><strong>Roll Number:</strong> {{ post.roll_number }}</p>
+            {% if post.image %}
+                <p><strong>Image:</strong></p>
+                <img src="{{ post.image.url }}" alt="Student Image" class="scanned-img">
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+
+<!-- QR Scanner Script -->
+<script>
+    function onScanSuccess(decodedText) {
+        document.getElementById("qr_data").value = decodedText;
+        document.querySelector("form").submit();
+    }
+    function onScanError(errorMessage) {
+        console.log("Scan Error: ", errorMessage);
+    }
+    const qrScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250 });
+    qrScanner.render(onScanSuccess, onScanError);
+</script>
+
+</body>
+</html>

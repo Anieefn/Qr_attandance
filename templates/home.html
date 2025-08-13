@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f7fc;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .navbar {
+            background-color: #2575fc;
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+            min-height: 150px;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .student-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .card-img-section {
+            flex: 0 0 40%;
+            background-color: #e9ecef;
+        }
+        .card-content-section {
+            flex: 0 0 60%;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        footer {
+            background-color: #2575fc;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .alert {
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 🔷 Header -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Teacher Dashboard</a>
+            <div class="collapse navbar-collapse justify-content-end">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-file-alt"></i> Report</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'attendance' userid %}"><i class="fas fa-qrcode"></i> Scanner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+
+        {% if error_message %}
+            <div class="alert alert-danger text-center">
+                {{ error_message }}
+            </div>
+        {% endif %}
+
+        <h3 class="mb-4 text-center">Student Overview</h3>
+        <div class="row g-4">
+            {% for student in student_data %}
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="card">
+                    <!-- Image Section -->
+                    <div class="card-img-section">
+                        {% if student.image %}
+                            <img src="{{ student.image.url }}" alt="Profile" class="student-img">
+                        {% else %}
+                            <div class="d-flex align-items-center justify-content-center h-100">
+                                <i class="fas fa-user-circle fa-5x text-muted"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Content Section -->
+                    <div class="card-content-section">
+                        <h5 class="card-title">{{ student.username }}</h5>
+                        <p class="text-muted mb-1">Roll No: {{ student.roll_number }}</p>
+                        <p><strong>Date:</strong> {{ student.attendance_date|date:"M d, Y"|default:"—" }}</p>
+                        <p><strong>Reports:</strong> {{ student.report_count|default:"—" }}</p>
+                        <p><strong>Report Date:</strong> {{ student.report_date|date:"M d, Y"|default:"—" }}</p>
+
+                        {% if student.attendance_present is not None %}
+                            <div class="mb-2"><strong>Attendance:</strong> {{ student.attendance_present }}%</div>
+                            <div class="progress" style="height: 20px;">
+                                <div class="progress-bar
+                                    {% if student.attendance_present < 30 %}bg-danger
+                                    {% elif student.attendance_present < 60 %}bg-primary
+                                    {% else %}bg-success
+                                    {% endif %}"
+                                    role="progressbar"
+                                    style="width: {{ student.attendance_present }}%;"
+                                    aria-valuenow="{{ student.attendance_present }}"
+                                    aria-valuemin="0"
+                                    aria-valuemax="100">
+                                    {{ student.attendance_present }}%
+                                </div>
+                            </div>
+                        {% else %}
+                            <p><strong>Attendance:</strong> —</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- 🔻 Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Expense Tracker | Designed by Noor</p>
+        </div>
+    </footer>
+
+</body>
+</html>
