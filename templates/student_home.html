@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+        }
+
+        header, footer {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            float: right;
+            font-weight: bold;
+        }
+
+        .container {
+            padding: 30px 20px;
+        }
+
+        .student-card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .student-card img.profile {
+            max-width: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .student-card img.qr {
+            max-width: 120px;
+            margin-bottom: 15px;
+        }
+
+        .student-card h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .info {
+            margin: 10px 0;
+            text-align: left;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+            height: 20px;
+            margin-top: 5px;
+        }
+        .student-card img.qr {
+    max-width: 150px;
+    margin: 10px auto;
+    display: block;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+        .progress-fill {
+            height: 100%;
+            text-align: right;
+            line-height: 20px;
+            color: white;
+            padding-right: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <span>Student Dashboard</span>
+    <a href="{% url 'logout' %}">Logout</a>
+</header>
+
+<div class="container">
+    <div class="student-card">
+        {% if student_data.image %}
+            <img src="{{ student_data.image.url }}" alt="Student Image" class="profile">
+        {% endif %}
+        {% if student_data.qr %}
+    <img src="{{ student_data.qr.url }}" alt="QR Code" class="qr">
+{% else %}
+    <p>No QR code available.</p>
+{% endif %}
+
+        <h2>{{ student_data.username }}</h2>
+        <div class="info"><strong>Roll Number:</strong> {{ student_data.roll_number }}</div>
+
+        <div class="info">
+            <strong>Attendance:</strong> {{ student_data.attendance_present }}%
+            <div class="progress-bar">
+                <div class="progress-fill"
+                     style="width: {{ student_data.attendance_present }}%;
+                            background-color:
+                                {% if student_data.attendance_present < 30 %}
+                                    red
+                                {% elif student_data.attendance_present < 50 %}
+                                    blue
+                                {% elif student_data.attendance_present >= 60 %}
+                                    green
+                                {% else %}
+                                    orange
+                                {% endif %};">
+                    {{ student_data.attendance_present }}%
+                </div>
+            </div>
+        </div>
+
+        <div class="info"><strong>Attendance Date:</strong> {{ student_data.attendance_date|date:"d M Y" }}</div>
+        <div class="info"><strong>Report Date:</strong> {{ student_data.report_date|date:"d M Y" }}</div>
+    </div>
+</div>
+
+<footer>
+    &copy; {{ now|date:"Y" }} Your School Name
+</footer>
+
+</body>
+</html>

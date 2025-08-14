@@ -9,21 +9,27 @@ from .models import Register, Report, Attendance
 # Create your views here.
 def index(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
-        # Avoid crash if no user is found
+        # Try to find matching user
         user = Register.objects.filter(username=username, password=password).first()
 
         if user:
+            # Redirect based on role
             if user.role == 'student':
-                return render(request, 'student.html', {"userid": user.id})
+                return redirect('student', userid=user.id)
             elif user.role == 'teacher':
                 return redirect('home', userid=user.id)
+        else:
+            # Only show error if form is submitted AND credentials are wrong
+            return render(request, 'login.html', {
+                "error_message": "Username or password is incorrect"
+            })
 
-    # If no match or method is GET
-    error_message = 'Username or password is incorrect'
-    return render(request, 'login.html', {"error_message": error_message})
+    # GET request (loading page) — no error message
+    return render(request, 'login.html')
+
 
 def signup(request):
     if request.method == 'POST':
@@ -73,7 +79,6 @@ def teacher(request, userid):
             "image": getattr(student, "image", None),  # only works if you add an image field
             "attendance_present": attendance.present if attendance else None,
             "attendance_date": attendance.date if attendance else None,
-            "report_count": report.count if report else None,
             "report_date": report.date if report else None
         })
 
@@ -105,7 +110,7 @@ def attendance(request,userid):
         today = now().date()
         report_entry = Report.objects.filter(roll_number=roll_number).order_by('-date').first()
 
-        if report_entry and report_entry.date.date() == today:
+        if report_entry and report_entry.date == today:
             pre -= 4
         else:
             pre += 2
@@ -137,3 +142,36 @@ def attendance(request,userid):
         "post": post,
         "userid": userid
     })
+
+def student_dashboard(request, userid):
+    # Get the logged-in student's data
+    student = get_object_or_404(Register, id=userid, role='student')
+
+    # Get attendance and report data
+    attendance = Attendance.objects.filter(roll_number=student.roll_number).first()
+    report = Report.objects.filter(roll_number=student.roll_number).first()
+
+    student_data = {
+        "username": student.username,
+        "roll_number": student.roll_number,
+        "image": getattr(student, "image", None),
+        "qr": getattr(student, "qr", None),
+        "attendance_present": attendance.present if attendance else None,
+        "attendance_date": attendance.date if attendance else None,
+        "report_date": report.date if report else None
+    }
+
+    return render(request, 'student_home.html', {
+        "student_data": student_data,
+        "userid": userid
+    })
+
+def report(request,userid):
+    if request.method == 'POST':
+        roll_number = request.POST.get('roll_number')
+        reports=Report(roll_number=roll_number)
+        reports.save()
+    return render(request,'report.html',{'userid': userid})
+
+def logout(request):
+    return render(request,'login.html')

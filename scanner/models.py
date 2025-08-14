@@ -14,7 +14,6 @@ class Register(models.Model):
 
 class Report(models.Model):
     roll_number = models.CharField(max_length=50)
-    count = models.IntegerField()
     date = models.DateField(auto_now_add=True)
     def __str__(self):
         return f'{self.id}'

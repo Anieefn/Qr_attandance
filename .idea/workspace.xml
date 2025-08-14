@@ -4,17 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4080d552-cc7b-493e-ae1e-ffdd60d9aba0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/smartatt.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scanner/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/home.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/scan.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/signup.html" afterDir="false" />
+    <list default="true" id="4080d552-cc7b-493e-ae1e-ffdd60d9aba0" name="Changes" comment="&quot;teacher &quot;">
+      <change afterPath="$PROJECT_DIR$/templates/report.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/student_home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scanner/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/scanner/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scanner/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/scanner/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scanner/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scanner/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/scan.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/scan.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +52,7 @@
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -105,11 +104,35 @@
       <option name="presentableId" value="Default" />
       <updated>1755076701926</updated>
       <workItem from="1755076703197" duration="8618000" />
-      <workItem from="1755089602106" duration="4889000" />
+      <workItem from="1755089602106" duration="5258000" />
+      <workItem from="1755147106829" duration="4268000" />
+      <workItem from="1755162087572" duration="818000" />
     </task>
+    <task id="LOCAL-00001" summary="&quot;teacher bashboard&quot;">
+      <option name="closed" value="true" />
+      <created>1755094783269</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1755094783269</updated>
+    </task>
+    <task id="LOCAL-00002" summary="&quot;teacher &quot;">
+      <option name="closed" value="true" />
+      <created>1755094955429</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1755094955429</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="&quot;teacher bashboard&quot;" />
+    <MESSAGE value="&quot;teacher &quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;teacher &quot;" />
   </component>
 </project>
