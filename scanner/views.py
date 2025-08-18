@@ -20,7 +20,7 @@ def index(request):
             if user.role == 'student':
                 return redirect('student', userid=user.id)
             elif user.role == 'teacher':
-                return redirect('home', userid=user.id)
+                return redirect('home', userid=user.id, year=1)
         else:
             # Only show error if form is submitted AND credentials are wrong
             return render(request, 'login.html', {
@@ -36,6 +36,7 @@ def signup(request):
         username = request.POST['username']
         password = request.POST['password']
         email = request.POST['email']
+        year = request.POST['year']
         roll_number = request.POST['roll_number']
         image = request.FILES.get('image')
 
@@ -52,7 +53,8 @@ def signup(request):
             email=email,
             roll_number=roll_number,
             image=image,
-            qr=qr_file
+            qr=qr_file,
+            year=year
         )
         user.save()
 
@@ -61,12 +63,12 @@ def signup(request):
 
     return render(request, 'signup.html')
 
-def teacher(request, userid):
+def teacher(request, userid, year=1):  # Default year is 1
     # Get teacher's own data
     user = get_object_or_404(Register, id=userid)
 
-    # Get all students
-    students = Register.objects.filter(role='student')
+    # Filter students by year
+    students = Register.objects.filter(role='student', year=year)
 
     student_data = []
     for student in students:
@@ -74,9 +76,11 @@ def teacher(request, userid):
         report = Report.objects.filter(roll_number=student.roll_number).first()
 
         student_data.append({
+            "id": student.id,
             "username": student.username,
             "roll_number": student.roll_number,
-            "image": getattr(student, "image", None),  # only works if you add an image field
+            "year":student.year,
+            "image": getattr(student, "image", None),
             "attendance_present": attendance.present if attendance else None,
             "attendance_date": attendance.date if attendance else None,
             "report_date": report.date if report else None
@@ -84,8 +88,8 @@ def teacher(request, userid):
 
     return render(request, 'home.html', {
         "userid": userid,
+        "year": year,
         "student_data": student_data,
-
     })
 
 
@@ -152,10 +156,12 @@ def student_dashboard(request, userid):
     report = Report.objects.filter(roll_number=student.roll_number).first()
 
     student_data = {
+        "id": student.id,
         "username": student.username,
         "roll_number": student.roll_number,
         "image": getattr(student, "image", None),
         "qr": getattr(student, "qr", None),
+        "year": student.year,
         "attendance_present": attendance.present if attendance else None,
         "attendance_date": attendance.date if attendance else None,
         "report_date": report.date if report else None
@@ -175,3 +181,24 @@ def report(request,userid):
 
 def logout(request):
     return render(request,'login.html')
+
+def delete_student(request, userid, student_id):
+    student = get_object_or_404(Register, id=student_id, role='student')
+    student.delete()
+    return redirect('home', userid=userid, year=1)  # Change year if needed
+
+def update_student(request, userid):
+    # Get the student to update
+    student = get_object_or_404(Register, id=userid)
+
+    if request.method == 'POST':
+        student.username = request.POST.get('username')
+        student.roll_number = request.POST.get('roll_number')
+        student.year = request.POST.get('year')
+        student.save()
+        return redirect('student', userid=userid)
+
+    return render(request, 'update.html', {
+        'student': student,
+        'userid': userid
+    })

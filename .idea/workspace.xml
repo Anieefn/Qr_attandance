@@ -4,16 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4080d552-cc7b-493e-ae1e-ffdd60d9aba0" name="Changes" comment="&quot;teacher &quot;">
-      <change afterPath="$PROJECT_DIR$/templates/report.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/student_home.html" afterDir="false" />
+    <list default="true" id="4080d552-cc7b-493e-ae1e-ffdd60d9aba0" name="Changes" comment="&quot;final&quot;">
+      <change afterPath="$PROJECT_DIR$/templates/update.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scanner/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/scanner/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scanner/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/scanner/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scanner/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/scanner/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/report.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/report.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/scan.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/scan.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/signup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/student_home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/student_home.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +108,12 @@
       <workItem from="1755076703197" duration="8618000" />
       <workItem from="1755089602106" duration="5258000" />
       <workItem from="1755147106829" duration="4268000" />
-      <workItem from="1755162087572" duration="818000" />
+      <workItem from="1755162087572" duration="2056000" />
+      <workItem from="1755237785411" duration="2531000" />
+      <workItem from="1755244261107" duration="782000" />
+      <workItem from="1755247344481" duration="420000" />
+      <workItem from="1755271464657" duration="2735000" />
+      <workItem from="1755515553565" duration="397000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;teacher bashboard&quot;">
       <option name="closed" value="true" />
@@ -124,7 +131,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755094955429</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="&quot;final&quot;">
+      <option name="closed" value="true" />
+      <created>1755162955752</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1755162955752</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -133,6 +148,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="&quot;teacher bashboard&quot;" />
     <MESSAGE value="&quot;teacher &quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;teacher &quot;" />
+    <MESSAGE value="&quot;final&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;final&quot;" />
   </component>
 </project>

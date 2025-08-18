@@ -9,6 +9,7 @@ class Register(models.Model):
     roll_number = models.CharField(max_length=50)
     image = models.ImageField(upload_to='images/')
     qr = models.ImageField(upload_to='qr/',blank=True)
+    year = models.CharField(max_length=50,blank=True)
     def __str__(self):
         return f'{self.username}+{self.id}'
 

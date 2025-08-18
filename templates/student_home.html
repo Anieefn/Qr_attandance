@@ -97,6 +97,7 @@
 <header>
     <span>Student Dashboard</span>
     <a href="{% url 'logout' %}">Logout</a>
+    <a style="margin-right: 30px" href="{% url 'update_student' userid %}">update</a>
 </header>
 
 <div class="container">
@@ -112,6 +113,8 @@
 
         <h2>{{ student_data.username }}</h2>
         <div class="info"><strong>Roll Number:</strong> {{ student_data.roll_number }}</div>
+        <div class="info"><strong>year:</strong> {{ student_data.year }}</div>
+
 
         <div class="info">
             <strong>Attendance:</strong> {{ student_data.attendance_present }}%
